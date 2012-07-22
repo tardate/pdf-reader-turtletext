@@ -14,7 +14,7 @@ require 'rspec'
 require 'rspec/core/rake_task'
 
 $LOAD_PATH.unshift('lib')
-require 'pdf/turtletext/version'
+require 'pdf/reader/turtletext/version'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|

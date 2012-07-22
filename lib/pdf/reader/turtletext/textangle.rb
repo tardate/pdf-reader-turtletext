@@ -1,7 +1,7 @@
 # A DSL syntax for text extraction.
 # WIP - not using this yet
 #
-# textangle = PDF::Reader::Textangle.new(reader) do
+# textangle = PDF::Reader::Turtletext::Textangle.new(reader) do
 #   page 1
 #   below "Electricity Services"
 #   above "Gas Services by City Gas Pte Ltd"

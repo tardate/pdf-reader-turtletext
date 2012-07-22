@@ -4,6 +4,6 @@ require 'pdf/reader/positional_text_receiver'
 
 module PDF::Reader::Turtletext
 end
-require 'pdf/turtletext/version'
-require 'pdf/turtletext/structured_reader'
-require 'pdf/turtletext/textangle'
+require 'pdf/reader/turtletext/version'
+require 'pdf/reader/turtletext/structured_reader'
+require 'pdf/reader/turtletext/textangle'

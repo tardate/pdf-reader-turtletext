@@ -94,7 +94,7 @@ class PDF::Reader::Turtletext::StructuredReader
   # textangle.text
   #
   def bounding_box(&block)
-    PDF::Reader::Textangle.new(self,&block)
+    PDF::Reader::Turtletext::Textangle.new(self,&block)
   end
 
   private
