@@ -1,0 +1,3 @@
+# These are specific configuration settings required for travis-ci
+# see http://travis-ci.org/tardate/pdf-reader-turtletext
+rvm: 1.9.3
