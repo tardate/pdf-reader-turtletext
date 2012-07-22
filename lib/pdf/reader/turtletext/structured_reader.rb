@@ -3,6 +3,17 @@
 # which attempts to align text content in the PDF so it can be extracted
 # with correct alignment.
 #
+# Typical usage:
+#
+#   reader = PDF::Reader::Turtletext::StructuredReader.new(pdf_filename)
+#   page = 1
+#   heading_position = reader.text_position(/transaction table/i)
+#   next_section = reader.text_position(/transaction summary/i)
+#   transaction_rows = reader.text_in_region(
+#     heading_position[x], 900,
+#     heading_position[y] + 1,next_section[:y] -1
+#   )
+#
 class PDF::Reader::Turtletext::StructuredReader
   attr_reader :reader
   attr_reader :options
@@ -13,6 +24,11 @@ class PDF::Reader::Turtletext::StructuredReader
     @reader = PDF::Reader.new(source)
   end
 
+  # Returns the precision required in y positions.
+  # This is the fuzz range for interpreting y positions.
+  # Lines with y positions +/- +y_precision+ will be merged together.
+  # This helps align text correctly which may visually appear on the same line, but is actually
+  # off by a few pixels.
   def y_precision
     options[:y_precision] ||= 3
   end
@@ -59,7 +75,7 @@ class PDF::Reader::Turtletext::StructuredReader
   # Each line of text found is returned as an array element.
   # Each line of text is an array of the seperate text elements found on that line.
   #   [["first line first text", "first line last text"],["second line text"]]
-  def text_in_rect(xmin,xmax,ymin,ymax,page=1)
+  def text_in_region(xmin,xmax,ymin,ymax,page=1)
     text_map = content(page)
     box = []
     text_map.keys.sort.reverse.each do |y|

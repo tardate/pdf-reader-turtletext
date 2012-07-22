@@ -1,11 +1,44 @@
 = PDF::Reader::Turtletext {<img src="https://secure.travis-ci.org/tardate/pdf-reader-turtletext.png" />}[http://travis-ci.org/tardate/pdf-reader-turtletext]
 
+PDF::Reader::Turtletext is an extension for the most excellent {PDF::Reader}[https://github.com/yob/pdf-reader] gem.
+
+The aim of Turtletext is to provide simple and convenient methods for extracting PDF text content and
+converting it to structured data - even when there is no explicit structure in the original PDF source.
+
+A typical use is to extract details from utility bills that are provided in PDF format, to open up the data
+for analysis and other secondary uses.
+
+For an example of how this is works in practice, see the
+{sps_bill}[https://github.com/tardate/sps_bill_scanner/] gem
+(which is in fact the project where the original ideas for Turtletext gestated).
 
 == Requirements and Known Limitations
 
+* currently only tested with Ruby 1.9
+* fixed dependency on PDF::Reader v 1.1.1
 
+== Installation
+
+  gem install pdf-reader-turtletext
 
 == Usage
+
+=== PDF::Reader::Turtletext::StructuredReader
+
+Provides a range of methods to extract structured text from a PDF file,
+such as <tt>text_position</tt> and <tt>text_in_region</tt>.
+
+A typical usage:
+
+  reader = PDF::Reader::Turtletext::StructuredReader.new(pdf_filename)
+  page = 1
+  heading_position = reader.text_position(/transaction table/i)
+  next_section = reader.text_position(/transaction summary/i)
+  transaction_rows = reader.text_in_region(
+    heading_position[x], 900,
+    heading_position[y] + 1,next_section[:y] -1
+  )
+
 
 == Contributing to PDF::Reader::Turtletext
 
@@ -19,6 +52,5 @@
 
 == Copyright
 
-Copyright (c) 2012 Paul Gallagher. See LICENSE.txt for
-further details.
+Copyright (c) 2012 Paul Gallagher. See LICENSE for further details.
 

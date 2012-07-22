@@ -81,7 +81,7 @@ describe PDF::Reader::Turtletext::StructuredReader do
       end
     end
 
-    describe "#text_in_rect" do
+    describe "#text_in_region" do
       {
         :with_single_text => {
           :source_page_content => {10.0=>{10.0=>"a first bit of text"}},
@@ -118,7 +118,7 @@ describe PDF::Reader::Turtletext::StructuredReader do
           let(:ymin) { test_expectations[:ymin] }
           let(:ymax) { test_expectations[:ymax] }
           let(:expected_text) { test_expectations[:expected_text] }
-          subject { structured_reader.text_in_rect(xmin,xmax,ymin,ymax,page) }
+          subject { structured_reader.text_in_region(xmin,xmax,ymin,ymax,page) }
           it { should eql(expected_text) }
         end
       end
