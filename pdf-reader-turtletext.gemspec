@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
     "lib/pdf/reader/turtletext/version.rb",
     "pdf-reader-turtletext.gemspec",
     "spec/fixtures/pdf_samples/.gitkeep",
+    "spec/fixtures/pdf_samples/hello_world.pdf",
     "spec/fixtures/pdf_samples/junk_prefix.pdf",
     "spec/integration/pdf_samples_spec.rb",
     "spec/spec_helper.rb",
@@ -60,7 +61,8 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rake>, ["~> 0.9.2.2"])
       s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.11"])
-      s.add_development_dependency(%q<guard-rspec>, [">= 0"])
+      s.add_development_dependency(%q<prawn>, ["~> 0.12.0"])
+      s.add_development_dependency(%q<guard-rspec>, ["~> 1.2.0"])
     else
       s.add_dependency(%q<pdf-reader>, ["= 1.1.1"])
       s.add_dependency(%q<bundler>, ["~> 1.1.4"])
@@ -68,7 +70,8 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
       s.add_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_dependency(%q<rdoc>, ["~> 3.11"])
-      s.add_dependency(%q<guard-rspec>, [">= 0"])
+      s.add_dependency(%q<prawn>, ["~> 0.12.0"])
+      s.add_dependency(%q<guard-rspec>, ["~> 1.2.0"])
     end
   else
     s.add_dependency(%q<pdf-reader>, ["= 1.1.1"])
@@ -77,7 +80,8 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
     s.add_dependency(%q<rspec>, ["~> 2.8.0"])
     s.add_dependency(%q<rdoc>, ["~> 3.11"])
-    s.add_dependency(%q<guard-rspec>, [">= 0"])
+    s.add_dependency(%q<prawn>, ["~> 0.12.0"])
+    s.add_dependency(%q<guard-rspec>, ["~> 1.2.0"])
   end
 end
 

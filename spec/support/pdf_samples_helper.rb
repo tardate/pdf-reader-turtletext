@@ -7,8 +7,8 @@ module PdfSamplesHelper
     Pathname.new(File.dirname(__FILE__)).join('..','fixtures','pdf_samples')
   end
 
-  def junk_prefix_pdf_sample_name
-    pdf_samples_path.join('junk_prefix.pdf').to_s
+  def pdf_sample(sample_name)
+    pdf_samples_path.join(sample_name)
   end
 
   def pdf_sample_names
@@ -25,5 +25,19 @@ module PdfSamplesHelper
     rescue
       []
     end
+  end
+
+  def make_pdf_samples
+    require 'prawn'
+    puts "Making PDF samples for tests.."
+    make_sample_hello_world
+  end
+
+  def make_sample_hello_world
+    filename = pdf_sample('hello_world.pdf')
+    Prawn::Document.generate filename do
+      text "Hello World"
+    end
+    puts "Created: #{filename}"
   end
 end

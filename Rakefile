@@ -47,3 +47,11 @@ RDoc::Task.new do |rdoc|
   rdoc.title = "pdf-reader-turtletext #{PDF::Reader::Turtletext::Version::STRING}"
   rdoc.rdoc_files.include('README*', 'lib/**/*.rb')
 end
+
+desc "Generate sample PDFs for tests"
+task :make_pdf_samples do |t|
+  require Pathname.new(File.dirname(__FILE__)).join('spec','support','pdf_samples_helper')
+  include PdfSamplesHelper
+  make_pdf_samples
+end
+
