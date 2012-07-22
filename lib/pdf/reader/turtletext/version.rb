@@ -1,6 +1,6 @@
 module PDF
   class Reader
-    module Turtletext
+    class Turtletext
       class Version
         MAJOR = 0
         MINOR = 1

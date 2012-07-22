@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe PDF::Reader::Turtletext::StructuredReader do
-  let(:resource_class) { PDF::Reader::Turtletext::StructuredReader }
+describe PDF::Reader::Turtletext do
+  let(:resource_class) { PDF::Reader::Turtletext }
 
   let(:source) { nil } # we're just going to mock the PDF source here
   let(:structured_reader) { resource_class.new(source,options) }

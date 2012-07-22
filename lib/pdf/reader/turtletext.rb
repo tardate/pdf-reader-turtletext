@@ -1,11 +1,8 @@
 # Class for reading structured text content
-# This is the one that is a bit hairy - specifically check the fuzzed_y usage
-# which attempts to align text content in the PDF so it can be extracted
-# with correct alignment.
 #
 # Typical usage:
 #
-#   reader = PDF::Reader::Turtletext::StructuredReader.new(pdf_filename)
+#   reader = PDF::Reader::Turtletext.new(pdf_filename)
 #   page = 1
 #   heading_position = reader.text_position(/transaction table/i)
 #   next_section = reader.text_position(/transaction summary/i)
@@ -14,7 +11,7 @@
 #     heading_position[y] + 1,next_section[:y] -1
 #   )
 #
-class PDF::Reader::Turtletext::StructuredReader
+class PDF::Reader::Turtletext
   attr_reader :reader
   attr_reader :options
 

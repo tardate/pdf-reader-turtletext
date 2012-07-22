@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
     "lib/pdf-reader-turtletext.rb",
     "lib/pdf/reader/patch/object_hash.rb",
     "lib/pdf/reader/positional_text_receiver.rb",
-    "lib/pdf/reader/turtletext/structured_reader.rb",
+    "lib/pdf/reader/turtletext.rb",
     "lib/pdf/reader/turtletext/textangle.rb",
     "lib/pdf/reader/turtletext/version.rb",
     "pdf-reader-turtletext.gemspec",
@@ -41,8 +41,8 @@ Gem::Specification.new do |s|
     "spec/support/pdf_samples_helper.rb",
     "spec/unit/reader/patch/object_hash_spec.rb",
     "spec/unit/reader/positional_text_receiver_spec.rb",
-    "spec/unit/reader/turtletext/structure_reader_spec.rb",
     "spec/unit/reader/turtletext/textangle_spec.rb",
+    "spec/unit/reader/turtletext/turtletext_spec.rb",
     "spec/unit/reader/turtletext/version_spec.rb"
   ]
   s.homepage = "https://github.com/tardate/pdf-reader-turtletext"
