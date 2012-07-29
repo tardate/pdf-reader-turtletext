@@ -32,11 +32,14 @@ A typical usage:
 
   reader = PDF::Reader::Turtletext.new(pdf_filename)
   page = 1
-  heading_position = reader.text_position(/transaction table/i)
-  next_section = reader.text_position(/transaction summary/i)
+  heading_position = reader.text_position(/transaction table/i, page)
+  next_section = reader.text_position(/transaction summary/i, page)
   transaction_rows = reader.text_in_region(
-    heading_position[x], 900,
-    heading_position[y] + 1,next_section[:y] -1
+    heading_position[x],
+    900,
+    next_section[y] + 1,
+    heading_position[:y] - 1,
+    page
   )
 
 

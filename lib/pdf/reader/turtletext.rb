@@ -48,7 +48,7 @@ class PDF::Reader::Turtletext
   # Fuzz factors: +y_precision+
   def fuzzed_y(input)
     output = {}
-    input.keys.sort.each do |precise_y|
+    input.keys.sort.reverse.each do |precise_y|
       # matching_y = (precise_y / 5.0).truncate * 5.0
       matching_y = output.keys.select{|new_y| (new_y - precise_y).abs < y_precision }.first || precise_y
       output[matching_y] ||= {}
@@ -69,6 +69,8 @@ class PDF::Reader::Turtletext
   end
 
   # Returns an array of text elements found within the x,y limits,
+  # x ranges from +xmin+ (left of page) to +xmax+ (right of page)
+  # y ranges from +ymin+ (bottom of page) to +ymax+ (top of page)
   # Each line of text found is returned as an array element.
   # Each line of text is an array of the seperate text elements found on that line.
   #   [["first line first text", "first line last text"],["second line text"]]
