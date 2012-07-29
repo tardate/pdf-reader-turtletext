@@ -26,60 +26,173 @@ describe PDF::Reader::Turtletext::Textangle do
       10.0=>{40.0=>"smoked and streaky for me"}
     } }
 
-    it "should work with block param" do
-      textangle = resource_class.new(turtletext_reader) do |r|
-        r.below = "fraud"
+    context "with block param" do
+      [:above,:below,:left_of,:right_of].each do |positional_method|
+        context "with #{positional_method}" do
+          let(:term) { "canary" }
+
+          it "should work with block param" do
+            textangle = resource_class.new(turtletext_reader) do |r|
+              r.send("#{positional_method}=",term)
+            end
+            textangle.send(positional_method).should eql(term)
+          end
+
+        end
       end
-      textangle.below.should eql("fraud")
     end
 
-    it "should work without block param" do
-      textangle = resource_class.new(turtletext_reader) do
-        below "fraud"
+    context "without block param" do
+      it "#above should work" do
+        textangle = resource_class.new(turtletext_reader) do
+          above "canary"
+        end
+        textangle.above.should eql("canary")
       end
-      textangle.below.should eql("fraud")
+      it "#below should work" do
+        textangle = resource_class.new(turtletext_reader) do
+          below "canary"
+        end
+        textangle.below.should eql("canary")
+      end
+      it "#left_of should work" do
+        textangle = resource_class.new(turtletext_reader) do
+          left_of "canary"
+        end
+        textangle.left_of.should eql("canary")
+      end
+      it "#below should work" do
+        textangle = resource_class.new(turtletext_reader) do
+          right_of "canary"
+        end
+        textangle.right_of.should eql("canary")
+      end
     end
 
     context "when only below specified" do
-      let(:textangle) { resource_class.new(turtletext_reader) do |r|
-        r.below = "fraud"
-      end }
-      let(:expected) { [["smoked and streaky for me"]]}
-      subject { textangle.text }
-      it { should eql(expected) }
+      context "as a string" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.below = "fraud"
+        end }
+        let(:expected) { [["smoked and streaky for me"]]}
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a regex" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.below = /Fraud/i
+        end }
+        let(:expected) { [["smoked and streaky for me"]]}
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a number" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.below = 20
+        end }
+        let(:expected) { [["smoked and streaky for me"]]}
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
     end
 
     context "when only above specified" do
-      let(:textangle) { resource_class.new(turtletext_reader) do |r|
-        r.above = "heaven"
-      end }
-      let(:expected) { [["crunchy bacon"]]}
-      subject { textangle.text }
-      it { should eql(expected) }
+      context "as a string" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.above = "heaven"
+        end }
+        let(:expected) { [["crunchy bacon"]]}
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a regex" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.above = /heaVen/i
+        end }
+        let(:expected) { [["crunchy bacon"]]}
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a number" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.above = 41
+        end }
+        let(:expected) { [["crunchy bacon"]]}
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
     end
 
     context "when only left_of specified" do
-      let(:textangle) { resource_class.new(turtletext_reader) do |r|
-        r.left_of = "turkey bacon"
-      end }
-      let(:expected) { [
-        ["crunchy bacon"],
-        ["bacon on kimchi noodles", "heaven"]
-      ] }
-      subject { textangle.text }
-      it { should eql(expected) }
+      context "as a string" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.left_of = "turkey bacon"
+        end }
+        let(:expected) { [
+          ["crunchy bacon"],
+          ["bacon on kimchi noodles", "heaven"]
+        ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a regex" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.left_of = /turKey/i
+        end }
+        let(:expected) { [
+          ["crunchy bacon"],
+          ["bacon on kimchi noodles", "heaven"]
+        ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a number" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.left_of = 29
+        end }
+        let(:expected) { [
+          ["crunchy bacon"],
+          ["bacon on kimchi noodles", "heaven"]
+        ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
     end
 
     context "when only right_of specified" do
-      let(:textangle) { resource_class.new(turtletext_reader) do |r|
-        r.right_of = "heaven"
-      end }
-      let(:expected) { [
-        ["turkey bacon","fraud"],
-        ["smoked and streaky for me"]
-      ] }
-      subject { textangle.text }
-      it { should eql(expected) }
+      context "as a string" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.right_of = "heaven"
+        end }
+        let(:expected) { [
+          ["turkey bacon","fraud"],
+          ["smoked and streaky for me"]
+        ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a regex" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.right_of = /Heaven/i
+        end }
+        let(:expected) { [
+          ["turkey bacon","fraud"],
+          ["smoked and streaky for me"]
+        ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "as a number" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.right_of = 26
+        end }
+        let(:expected) { [
+          ["turkey bacon","fraud"],
+          ["smoked and streaky for me"]
+        ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
     end
 
   end

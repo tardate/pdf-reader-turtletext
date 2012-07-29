@@ -16,6 +16,8 @@ class PDF::Reader::Turtletext
   attr_reader :options
 
   # +source+ is a file name or stream-like object
+  # Supported +options+ include:
+  # * :y_precision
   def initialize(source, options={})
     @options = options
     @reader = PDF::Reader.new(source)
@@ -106,17 +108,30 @@ class PDF::Reader::Turtletext
     end
   end
 
-  # WIP - not using Textangle yet for text extraction.
-  # Ideal usage is something like this:
+  # Returns a text region definition using a descriptive block.
   #
-  # textangle = reader.bounding_box do
-  #   page 1
-  #   below "Electricity Services"
-  #   above "Gas Services by City Gas Pte Ltd"
-  #   right_of 240.0
-  #   left_of "Total ($)"
-  # end
-  # textangle.text
+  # Usage:
+  #
+  #   textangle = reader.bounding_box do
+  #     page 1
+  #     below /electricity/i
+  #     above 10
+  #     right_of 240.0
+  #     left_of "Total ($)"
+  #   end
+  #   textangle.text
+  #
+  # Alternatively, an explicit block parameter may be used:
+  #
+  #   textangle = reader.bounding_box do |r|
+  #     r.page 1
+  #     r.below /electricity/i
+  #     r.above 10
+  #     r.right_of 240.0
+  #     r.left_of "Total ($)"
+  #   end
+  #   textangle.text
+  #   => [['string','string'],['string']] # array of rows, each row is an array of column text element
   #
   def bounding_box(&block)
     PDF::Reader::Turtletext::Textangle.new(self,&block)

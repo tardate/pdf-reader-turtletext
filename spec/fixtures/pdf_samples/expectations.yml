@@ -1,0 +1,95 @@
+# this file defines the test expectations for PDF samples in spec/fixtures/pdf_samples.
+#
+# This is a YAML-format file, so beware that indentation is significant
+---
+hello_world.pdf:
+  :test_above:
+    :above: 100
+    :expected_text:
+    -
+      - "Hello World"
+  :test_below:
+    :below: 900
+    :expected_text:
+    -
+      - "Hello World"
+  :test_below_na:
+    :below: 10
+    :expected_text: []
+simple_table_text.pdf:
+  :test_above:
+    :above: Table Header
+    :expected_text:
+    -
+      - "Simple Table Text"
+  :test_below:
+    :below: row 2
+    :expected_text:
+    -
+      - "Table Footer"
+  :test_right_of:
+    :right_of: row 1
+    :expected_text:
+    -
+      - "val 1"
+      - "val 2"
+      - "val 3"
+    -
+      - "val 1"
+      - "val 2"
+      - "val 3"
+  :test_left_of:
+    :left_of: val 1
+    :expected_text:
+    -
+      - "Simple Table Text"
+    -
+      - "Table Header"
+    -
+      - "row 1"
+    -
+      - "row 2"
+    -
+      - "Table Footer"
+  :test_above_and_below:
+    :below: Table Header
+    :above: Table Footer
+    :expected_text:
+    -
+      - "row 1"
+      - "val 1"
+      - "val 2"
+      - "val 3"
+    -
+      - "row 2"
+      - "val 1"
+      - "val 2"
+      - "val 3"
+  :test_above_and_below_and_left_of:
+    :below: Table Header
+    :above: Table Footer
+    :left_of: val 2
+    :expected_text:
+    -
+      - "row 1"
+      - "val 1"
+    -
+      - "row 2"
+      - "val 1"
+  :test_above_and_below_and_left_of_and_right_of:
+    :below: Table Header
+    :above: Table Footer
+    :left_of: val 2
+    :right_of: row 1
+    :expected_text:
+    -
+      - "val 1"
+    -
+      - "val 1"
+
+
+
+
+
+
+

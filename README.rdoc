@@ -17,30 +17,108 @@ For an example of how this is works in practice, see the
 * currently only tested with Ruby 1.9
 * fixed dependency on PDF::Reader v 1.1.1
 
-== Installation
+== The PDF::Reader::Turtletext Cookbook
 
-  gem install pdf-reader-turtletext
+=== How do I install it for normal use?
 
-== Usage
+It is distributed as a gem, so all normal gem installation procedures apply. At it's simplest, install the
+gem directly from the command line:
 
-=== PDF::Reader::Turtletext
+  $ gem install pdf-reader-turtletext
 
-Provides a range of methods to extract structured text from a PDF file,
-such as <tt>text_position</tt> and <tt>text_in_region</tt>.
+If you are using bundler or Rails, add to your Gemfile:
 
-A typical usage:
+  gem 'pdf-reader-turtletext'
 
+Then bundle install:
+
+  $ bundle
+
+=== How do I install it for gem development?
+
+If you want to work on enhancements of fix bugs in PDF::Reader::Turtletext, fork and clone the github repository. See the section below on 'Contributing to PDF::Reader::Turtletext'
+
+=== How to instantiate Turtletext in code
+
+All interaction is done using an instance of the PDF::Reader::Turtletext class. It is
+initialised given a filename or IO-like object, and any required options.
+
+Typical usage:
+
+  pdf_filename = '../some_path/some.pdf'
   reader = PDF::Reader::Turtletext.new(pdf_filename)
-  page = 1
-  heading_position = reader.text_position(/transaction table/i, page)
-  next_section = reader.text_position(/transaction summary/i, page)
-  transaction_rows = reader.text_in_region(
-    heading_position[x],
-    900,
-    next_section[y] + 1,
-    heading_position[:y] - 1,
-    page
+  options = { :y_precision => 5 }
+  reader_with_options = PDF::Reader::Turtletext.new(pdf_filename,options)
+
+=== How to extract text within a region described in relation to other text
+
+Problem: we don't know exactly where the required text will be on the page, and it is not encoded
+within the PDF as a single object. But we do know that it will be relatively positions (for example)
+below a certain bit of text, to the left of another, and above some other text.
+
+Solution: use the <tt>bounding_box</tt> method to describe the region and extract the patching text.
+
+  textangle = reader.bounding_box do
+    page 1
+    below /electricity/i
+    above 10
+    right_of 240.0
+    left_of "Total ($)"
+  end
+  textangle.text
+  => [['string','string'],['string']] # array of rows, each row is an array of text elements in the row
+
+The range of methods that can be used within the <tt>bounding_box</tt> block are all optional, and include:
+* <tt>page</tt> - specifies the PDF page from which to extract text (default is 1)
+* <tt>below</tt> - a string, regex or number that describes the upper limit of the text box.
+* <tt>above</tt> - a string, regex or number that describes the lower limit of the text box.
+* <tt>left_of</tt> - a string, regex or number that describes the right limit of the text box.
+* <tt>right_of</tt> - a string, regex or number that describes the left limit of the text box.
+
+Note that <tt>left_of</tt> and <tt>right_of</tt> do *not* need to be within the vertical range of the box being described. For example, you could use an element in the page header to describe the <tt>left_of</tt>
+limit for a table at the bottom of the page - if it has the correct alignment needed to describe your text region.
+
+=== Using a block parameter with the <tt>bounding_box</tt> method
+
+An explicit block parameter may be used with the <tt>bounding_box</tt> method:
+
+  textangle = reader.bounding_box do |r|
+    r.below /electricity/i
+    r.left_of "Total ($)"
+  end
+  textangle.text
+
+=== Extract text for a region with known positional co-ordinates
+
+If you know (or can calculate) the x,y positions of the required text region, you can extract the region's
+text using the <tt>text_in_region</tt> method.
+
+  text = reader.text_in_region(
+    10,  # minimum x (left-most) (inclusive)
+    900, # maximum x (right-most) (inclusive)
+    200, # minimum y (bottom-most) (inclusive)
+    400, # maximum y (top-most) (inclusive)
+    1    # page
   )
+  => [['string','string'],['string']] # array of rows, each row is an array of text elements in the row
+
+Note that the x,y origin is at the bottom-left of the page.
+
+=== How to find the x,y co-ordinate of a specific text element
+
+Problem: if you are doing low-level text extraction with <tt>text_in_region</tt> for example,
+it is usually necessary to locate specific text to provide a positional reference.
+
+Solution: use the <tt>text_position</tt> method to locate text by exact or partial match.
+It returns a Hash of x/y co-ordinates that is the bottom-left corner of the text.
+
+  page = 1
+  text_by_exact_match = reader.text_position("Transaction Table", page)
+  => { :x => 10.0, :y => 600.0 }
+  text_by_regex_match = reader.text_position(/transaction summary/i, page)
+  => { :x => 10.0, :y => 300.0 }
+
+Note: in the case of multitple matches, only the first match is returned.
 
 
 == Contributing to PDF::Reader::Turtletext
