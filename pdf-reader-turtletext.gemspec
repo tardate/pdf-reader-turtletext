@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "pdf-reader-turtletext"
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Gallagher"]
-  s.date = "2012-07-22"
+  s.date = "2012-07-31"
   s.description = "a library that can read structured and positional text from PDFs. Ideal for asembling structured data from invoices and the like."
   s.email = "gallagher.paul@gmail.com"
   s.extra_rdoc_files = [
@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
     ".rspec",
     ".rvmrc",
     ".travis.yml",
+    "CHANGELOG",
     "Gemfile",
     "Gemfile.lock",
     "Guardfile",
@@ -34,8 +35,10 @@ Gem::Specification.new do |s|
     "lib/pdf/reader/turtletext/version.rb",
     "pdf-reader-turtletext.gemspec",
     "spec/fixtures/pdf_samples/.gitkeep",
+    "spec/fixtures/pdf_samples/expectations.yml",
     "spec/fixtures/pdf_samples/hello_world.pdf",
     "spec/fixtures/pdf_samples/junk_prefix.pdf",
+    "spec/fixtures/pdf_samples/simple_table_text.pdf",
     "spec/integration/pdf_samples_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/pdf_samples_helper.rb",

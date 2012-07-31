@@ -1,0 +1,9 @@
+Version 0.2.0              Release: n/a
+==================================================
+* add bounding_box / textangle semantics
+* improve documentation
+
+Version 0.1.0              Release: 22nd July 2012
+==================================================
+* Initial packaging and release of core functionality directly extracted
+  from https://github.com/tardate/sps_bill_scanner/
