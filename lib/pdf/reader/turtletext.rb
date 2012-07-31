@@ -56,7 +56,7 @@ class PDF::Reader::Turtletext
       new_row_content = input[precise_y].to_a
       if y_index
         row_content = output[y_index].last
-        row_content << new_row_content
+        row_content << new_row_content.flatten
         output[y_index] = [matching_y,row_content]
       else
         output << [matching_y,new_row_content]

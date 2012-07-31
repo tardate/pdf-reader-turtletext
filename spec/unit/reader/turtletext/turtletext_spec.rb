@@ -49,13 +49,13 @@ describe PDF::Reader::Turtletext do
       :with_fuzzed_y_text => {
         :source_page_content => {20.0=>{10.0=>"a first bit of text"},18.0=>{12.0=>"a second bit of text"}},
         :expected_precise_content => {20.0=>{10.0=>"a first bit of text"},18.0=>{12.0=>"a second bit of text"}},
-        :expected_fuzzed_content => [[20.0, [[10.0, "a first bit of text"], [[12.0, "a second bit of text"]]]]]
+        :expected_fuzzed_content => [[20.0, [[10.0, "a first bit of text"], [12.0, "a second bit of text"]]]]
       },
       :with_widely_separated_fuzzed_y_text => {
         :y_precision => 25,
         :source_page_content => {20.0=>{10.0=>"a first bit of text"},10.0=>{20.0=>"a second bit of text"}},
         :expected_precise_content => {20.0=>{10.0=>"a first bit of text"},10.0=>{20.0=>"a second bit of text"}},
-        :expected_fuzzed_content => [[20.0, [[10.0, "a first bit of text"], [[20.0, "a second bit of text"]]]]]
+        :expected_fuzzed_content => [[20.0, [[10.0, "a first bit of text"], [20.0, "a second bit of text"]]]]
       }
     }.each do |test_name,test_expectations|
       context test_name do
