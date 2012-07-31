@@ -21,7 +21,7 @@ For an example of how this is works in practice, see the
 
 === How do I install it for normal use?
 
-It is distributed as a gem, so all normal gem installation procedures apply. At it's simplest, install the
+It is distributed as a gem, so all normal gem installation procedures apply. To install the
 gem directly from the command line:
 
   $ gem install pdf-reader-turtletext
@@ -53,10 +53,10 @@ Typical usage:
 === How to extract text within a region described in relation to other text
 
 Problem: we don't know exactly where the required text will be on the page, and it is not encoded
-within the PDF as a single object. But we do know that it will be relatively positions (for example)
+within the PDF as a single object. But we do know that it will be relatively positioned (for example)
 below a certain bit of text, to the left of another, and above some other text.
 
-Solution: use the <tt>bounding_box</tt> method to describe the region and extract the patching text.
+Solution: use the <tt>bounding_box</tt> method to describe the region and extract the matching text.
 
   textangle = reader.bounding_box do
     page 1
@@ -69,14 +69,23 @@ Solution: use the <tt>bounding_box</tt> method to describe the region and extrac
   => [['string','string'],['string']] # array of rows, each row is an array of text elements in the row
 
 The range of methods that can be used within the <tt>bounding_box</tt> block are all optional, and include:
-* <tt>page</tt> - specifies the PDF page from which to extract text (default is 1)
-* <tt>below</tt> - a string, regex or number that describes the upper limit of the text box.
-* <tt>above</tt> - a string, regex or number that describes the lower limit of the text box.
-* <tt>left_of</tt> - a string, regex or number that describes the right limit of the text box.
-* <tt>right_of</tt> - a string, regex or number that describes the left limit of the text box.
+* <tt>page</tt> - specifies the PDF page from which to extract text (default is 1).
+* <tt>below</tt> - a string, regex or number that describes the upper limit of the text box
+  (default is top border of the page).
+* <tt>above</tt> - a string, regex or number that describes the lower limit of the text box
+  (default is bottom border of the page).
+* <tt>left_of</tt> - a string, regex or number that describes the right limit of the text box
+  (default is right border of the page).
+* <tt>right_of</tt> - a string, regex or number that describes the left limit of the text box
+  (default is left border of the page).
 
-Note that <tt>left_of</tt> and <tt>right_of</tt> do *not* need to be within the vertical range of the box being described. For example, you could use an element in the page header to describe the <tt>left_of</tt>
-limit for a table at the bottom of the page - if it has the correct alignment needed to describe your text region.
+Note that <tt>left_of</tt> and <tt>right_of</tt> constraints do *not* need to be within the vertical
+range of the box being described.
+For example, you could use an element in the page header to describe the <tt>left_of</tt> limit
+for a table at the bottom of the page, if it has the correct alignment needed to describe your text region.
+
+Similarly, <tt>above</tt> and <tt>below</tt> constraints do *not* need to be within the horizontal
+range of the box being described.
 
 === Using a block parameter with the <tt>bounding_box</tt> method
 
@@ -87,6 +96,7 @@ An explicit block parameter may be used with the <tt>bounding_box</tt> method:
     r.left_of "Total ($)"
   end
   textangle.text
+  => [['string','string'],['string']] # array of rows, each row is an array of text elements in the row
 
 === Extract text for a region with known positional co-ordinates
 
