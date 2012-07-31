@@ -100,7 +100,7 @@ class PDF::Reader::Turtletext
     item = if text.class <= Regexp
       content(page).map {|k,v| if x = v.reduce(nil){|memo,vv|  memo = (vv[1] =~ text) ? vv[0] : memo  } ; [k,x] ; end }
     else
-      content(page).map {|k,v| if x = v.rassoc(text) ; [k,x] ; end }
+      content(page).map {|k,v| if x = v.to_a.rassoc(text) ; [k,x] ; end }
     end
     item = item.compact.flatten
     unless item.empty?
