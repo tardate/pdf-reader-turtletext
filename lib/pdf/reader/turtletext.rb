@@ -59,7 +59,7 @@ class PDF::Reader::Turtletext
         row_content += new_row_content
         output[y_index] = [matching_y,row_content.sort{|a,b| a.first <=> b.first }]
       else
-        output << [matching_y,new_row_content]
+        output << [matching_y,new_row_content.sort{|a,b| a.first <=> b.first }]
       end
     end
     output
