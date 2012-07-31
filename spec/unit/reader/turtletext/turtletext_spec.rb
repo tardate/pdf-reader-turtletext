@@ -56,6 +56,11 @@ describe PDF::Reader::Turtletext do
         :source_page_content => {20.0=>{10.0=>"a first bit of text"},10.0=>{20.0=>"a second bit of text"}},
         :expected_precise_content => {20.0=>{10.0=>"a first bit of text"},10.0=>{20.0=>"a second bit of text"}},
         :expected_fuzzed_content => [[20.0, [[10.0, "a first bit of text"], [20.0, "a second bit of text"]]]]
+      },
+      :with_multiple_row_text => {
+        :source_page_content => {10.0=>{10.0=>"first"},8.0=>{20.0=>"second",30.0=>"third"}},
+        :expected_precise_content => {10.0=>{10.0=>"first"},8.0=>{20.0=>"second",30.0=>"third"}},
+        :expected_fuzzed_content => [[10.0, [[10.0, "first"], [20.0, "second"], [30.0, "third"]]]]
       }
     }.each do |test_name,test_expectations|
       context test_name do
