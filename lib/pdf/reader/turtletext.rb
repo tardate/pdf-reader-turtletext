@@ -57,7 +57,7 @@ class PDF::Reader::Turtletext
       if y_index
         row_content = output[y_index].last
         row_content += new_row_content
-        output[y_index] = [matching_y,row_content]
+        output[y_index] = [matching_y,row_content.sort{|a,b| a.first <=> b.first }]
       else
         output << [matching_y,new_row_content]
       end
@@ -91,10 +91,10 @@ class PDF::Reader::Turtletext
         row = []
         text_row.each do |x,element|
           if x >= xmin && x<= xmax
-            row << [x,element]
+            row << element
           end
         end
-        box << row.sort{|a,b| a.first <=> b.first }.map(&:last) unless row.empty?
+        box << row unless row.empty?
       end
     end
     box
