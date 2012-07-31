@@ -91,10 +91,10 @@ class PDF::Reader::Turtletext
         row = []
         text_row.each do |x,element|
           if x >= xmin && x<= xmax
-            row << element
+            row << [x,element]
           end
         end
-        box << row unless row.empty?
+        box << row.sort{|a,b| a.first <=> b.first }.map(&:last) unless row.empty?
       end
     end
     box
