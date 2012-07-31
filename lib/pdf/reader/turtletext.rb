@@ -33,7 +33,7 @@ class PDF::Reader::Turtletext
   end
 
   # Returns positional (with fuzzed y positioning) text content collection as a hash:
-  #   { y_position: { x_position: content}}
+  #   [ fuzzed_y_position, [[x_position,content]] ]
   def content(page=1)
     @content ||= []
     if @content[page]
@@ -43,18 +43,24 @@ class PDF::Reader::Turtletext
     end
   end
 
-  # Returns a hash with fuzzed positioning:
-  #   { fuzzed_y_position: { x_position: content}}
+  # Returns an Array with fuzzed positioning, ordered by decreasing y position. Row content order by x position.
+  #   [ fuzzed_y_position, [[x_position,content]] ]
   # Given +input+ as a hash:
   #   { y_position: { x_position: content}}
   # Fuzz factors: +y_precision+
   def fuzzed_y(input)
-    output = {}
+    output = []
     input.keys.sort.reverse.each do |precise_y|
-      # matching_y = (precise_y / 5.0).truncate * 5.0
-      matching_y = output.keys.select{|new_y| (new_y - precise_y).abs < y_precision }.first || precise_y
-      output[matching_y] ||= {}
-      output[matching_y].merge!(input[precise_y])
+      matching_y = output.map(&:first).select{|new_y| (new_y - precise_y).abs < y_precision }.first || precise_y
+      y_index = output.index{|y| y.first == matching_y }
+      new_row_content = input[precise_y].to_a
+      if y_index
+        row_content = output[y_index].last
+        row_content << new_row_content
+        output[y_index] = [matching_y,row_content]
+      else
+        output << [matching_y,new_row_content]
+      end
     end
     output
   end
@@ -79,12 +85,13 @@ class PDF::Reader::Turtletext
   def text_in_region(xmin,xmax,ymin,ymax,page=1)
     text_map = content(page)
     box = []
-    text_map.keys.sort.reverse.each do |y|
+
+    text_map.each do |y,text_row|
       if y >= ymin && y<= ymax
         row = []
-        text_map[y].keys.sort.each do |x|
+        text_row.each do |x,element|
           if x >= xmin && x<= xmax
-            row << text_map[y][x]
+            row << element
           end
         end
         box << row unless row.empty?
@@ -98,9 +105,13 @@ class PDF::Reader::Turtletext
   # +text+ may be a string (exact match required) or a Regexp
   def text_position(text,page=1)
     item = if text.class <= Regexp
-      content(page).map {|k,v| if x = v.reduce(nil){|memo,vv|  memo = (vv[1] =~ text) ? vv[0] : memo  } ; [k,x] ; end }
+      content(page).map do |k,v|
+        if x = v.reduce(nil){|memo,vv|  memo = (vv[1] =~ text) ? vv[0] : memo  }
+          [k,x]
+        end
+      end
     else
-      content(page).map {|k,v| if x = v.to_a.rassoc(text) ; [k,x] ; end }
+      content(page).map {|k,v| if x = v.rassoc(text) ; [k,x] ; end }
     end
     item = item.compact.flatten
     unless item.empty?
