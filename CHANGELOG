@@ -1,4 +1,8 @@
-Version 0.2.0              Release: n/a
+Version 0.2.1              Release: n/a
+==================================================
+* fix row sorting for Rubinius 1.8 mode
+
+Version 0.2.0              Release: 31st July 2012
 ==================================================
 * add bounding_box / textangle semantics
 * improve documentation
