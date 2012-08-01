@@ -1,3 +1,8 @@
+Version 0.2.2                Release: 1st Aug 2012
+==================================================
+* provide better control of inclusive/exclusive behaviour
+  for region selection \#4
+
 Version 0.2.1              Release: 31st July 2012
 ==================================================
 * fix row sorting for Rubinius 1.8 mode

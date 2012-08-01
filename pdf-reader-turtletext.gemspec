@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "pdf-reader-turtletext"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Gallagher"]
-  s.date = "2012-07-31"
+  s.date = "2012-08-01"
   s.description = "a library that can read structured and positional text from PDFs. Ideal for asembling structured data from invoices and the like."
   s.email = "gallagher.paul@gmail.com"
   s.extra_rdoc_files = [
