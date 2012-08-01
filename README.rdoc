@@ -36,7 +36,9 @@ Then bundle install:
 
 === How do I install it for gem development?
 
-If you want to work on enhancements of fix bugs in PDF::Reader::Turtletext, fork and clone the github repository. See the section below on 'Contributing to PDF::Reader::Turtletext'
+If you want to work on enhancements of fix bugs in PDF::Reader::Turtletext, fork and clone the github repository. If you are using bundler (recommended), run <tt>bundle</tt> to install development dependencies.
+
+See the section below on 'Contributing to PDF::Reader::Turtletext' for more information.
 
 === How to instantiate Turtletext in code
 
@@ -70,6 +72,8 @@ Solution: use the <tt>bounding_box</tt> method to describe the region and extrac
 
 The range of methods that can be used within the <tt>bounding_box</tt> block are all optional, and include:
 * <tt>page</tt> - specifies the PDF page from which to extract text (default is 1).
+* <tt>inclusive</tt> - whether region selection should be inclusive or exclusive of the specified positions
+  (default is false).
 * <tt>below</tt> - a string, regex or number that describes the upper limit of the text box
   (default is top border of the page).
 * <tt>above</tt> - a string, regex or number that describes the lower limit of the text box
@@ -98,17 +102,47 @@ An explicit block parameter may be used with the <tt>bounding_box</tt> method:
   textangle.text
   => [['string','string'],['string']] # array of rows, each row is an array of text elements in the row
 
+=== How to describe an inclusive <tt>bounding_box</tt> region
+
+By default, the <tt>bounding_box</tt> method makes exclusive selection (i.e. not including the
+region limits).
+
+To specifiy an inclusive region, use the <tt>inclusive!</tt> command:
+
+  textangle = reader.bounding_box do
+    inclusive!
+    below /electricity/i
+    left_of "Total ($)"
+  end
+
+Alternatively, set <tt>inclusive</tt> to true:
+
+  textangle = reader.bounding_box do
+    inclusive true
+    below /electricity/i
+    left_of "Total ($)"
+  end
+
+Or with a block parameter, you may also assign <tt>inclusive</tt> to true:
+
+  textangle = reader.bounding_box do |r|
+    r.inclusive = true
+    r.below /electricity/i
+    r.left_of "Total ($)"
+  end
+
 === Extract text for a region with known positional co-ordinates
 
 If you know (or can calculate) the x,y positions of the required text region, you can extract the region's
 text using the <tt>text_in_region</tt> method.
 
   text = reader.text_in_region(
-    10,  # minimum x (left-most) (inclusive)
-    900, # maximum x (right-most) (inclusive)
-    200, # minimum y (bottom-most) (inclusive)
-    400, # maximum y (top-most) (inclusive)
-    1    # page
+    10,   # minimum x (left-most)
+    900,  # maximum x (right-most)
+    200,  # minimum y (bottom-most)
+    400,  # maximum y (top-most)
+    1,    # page (default 1)
+    false # inclusive of x/y position if true (default false)
   )
   => [['string','string'],['string']] # array of rows, each row is an array of text elements in the row
 

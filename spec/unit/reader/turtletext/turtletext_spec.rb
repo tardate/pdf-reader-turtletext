@@ -90,7 +90,7 @@ describe PDF::Reader::Turtletext do
       {
         :with_single_text => {
           :source_page_content => {10.0=>{10.0=>"a first bit of text"}},
-          :xmin => 0, :xmax => 100, :ymin => 0, :ymax => 100,
+          :xmin => 0, :xmax => 100, :ymin => 0, :ymax => 100, :inclusive => false,
           :expected_text => [["a first bit of text"]]
         },
         :with_single_line_text => {
@@ -99,7 +99,7 @@ describe PDF::Reader::Turtletext do
             30.0=>{10.0=>"first part found", 20.0=>"last part found"},
             10.0=>{10.0=>"last line ignored"}
           },
-          :xmin => 0, :xmax => 100, :ymin => 20, :ymax => 50,
+          :xmin => 0, :xmax => 100, :ymin => 20, :ymax => 50, :inclusive => false,
           :expected_text => [["first part found", "last part found"]]
         },
         :with_multi_line_text => {
@@ -109,11 +109,20 @@ describe PDF::Reader::Turtletext do
             30.0=>{10.0=>"last line first part found", 20.0=>"last line last part found"},
             10.0=>{10.0=>"last line ignored"}
           },
-          :xmin => 0, :xmax => 100, :ymin => 20, :ymax => 50,
+          :xmin => 0, :xmax => 100, :ymin => 20, :ymax => 50, :inclusive => false,
           :expected_text => [
             ["first line first part found", "first line last part found"],
             ["last line first part found", "last line last part found"]
           ]
+        },
+        :with_inclusive_text => {
+          :source_page_content => {
+            70.0=>{10.0=>"first line ignored"},
+            30.0=>{10.0=>"first part found", 20.0=>"last part found"},
+            10.0=>{10.0=>"last line ignored"}
+          },
+          :xmin => 10, :xmax => 100, :ymin => 30, :ymax => 30, :inclusive => true,
+          :expected_text => [["first part found", "last part found"]]
         }
       }.each do |test_name,test_expectations|
         context test_name do
@@ -122,8 +131,9 @@ describe PDF::Reader::Turtletext do
           let(:xmax) { test_expectations[:xmax] }
           let(:ymin) { test_expectations[:ymin] }
           let(:ymax) { test_expectations[:ymax] }
+          let(:inclusive) { test_expectations[:inclusive] }
           let(:expected_text) { test_expectations[:expected_text] }
-          subject { turtletext_reader.text_in_region(xmin,xmax,ymin,ymax,page) }
+          subject { turtletext_reader.text_in_region(xmin,xmax,ymin,ymax,page,inclusive) }
           it { should eql(expected_text) }
         end
       end

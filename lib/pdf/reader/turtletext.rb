@@ -76,21 +76,22 @@ class PDF::Reader::Turtletext
     end
   end
 
-  # Returns an array of text elements found within the x,y limits:
+  # Returns an array of text elements found within the x,y limits on +page+:
   # * x ranges from +xmin+ (left of page) to +xmax+ (right of page)
   # * y ranges from +ymin+ (bottom of page) to +ymax+ (top of page)
+  # When +inclusive+ is false (default) the x/y limits do not include the actual x/y value.
   # Each line of text is an array of the seperate text elements found on that line.
   #   [["first line first text", "first line last text"],["second line text"]]
-  def text_in_region(xmin,xmax,ymin,ymax,page=1)
+  def text_in_region(xmin,xmax,ymin,ymax,page=1,inclusive=false)
     return [] unless xmin && xmax && ymin && ymax
     text_map = content(page)
     box = []
 
     text_map.each do |y,text_row|
-      if y >= ymin && y<= ymax
+      if inclusive ? (y >= ymin && y <= ymax) : (y > ymin && y < ymax)
         row = []
         text_row.each do |x,element|
-          if x >= xmin && x<= xmax
+          if inclusive ? (x >= xmin && x <= xmax) : (x > xmin && x < xmax)
             row << element
           end
         end
