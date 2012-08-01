@@ -62,8 +62,8 @@ class PDF::Reader::Turtletext::Textangle
     xmin = if right_of
       if [Fixnum,Float].include?(right_of.class)
         right_of
-      else
-        reader.text_position(right_of,page)[:x] + 1
+      elsif xy = reader.text_position(right_of,page)
+        xy[:x] + 1
       end
     else
       0
@@ -71,8 +71,8 @@ class PDF::Reader::Turtletext::Textangle
     xmax = if left_of
       if [Fixnum,Float].include?(left_of.class)
         left_of
-      else
-        reader.text_position(left_of,page)[:x] - 1
+      elsif xy = reader.text_position(left_of,page)
+        xy[:x] - 1
       end
     else
       99999 # TODO actual limit
@@ -81,8 +81,8 @@ class PDF::Reader::Turtletext::Textangle
     ymin = if above
       if [Fixnum,Float].include?(above.class)
         above
-      else
-        reader.text_position(above,page)[:y] + 1
+      elsif xy = reader.text_position(above,page)
+        xy[:y] + 1
       end
     else
       0
@@ -90,8 +90,8 @@ class PDF::Reader::Turtletext::Textangle
     ymax = if below
       if [Fixnum,Float].include?(below.class)
         below
-      else
-        reader.text_position(below,page)[:y] - 1
+      elsif xy = reader.text_position(below,page)
+        xy[:y] - 1
       end
     else
       99999 # TODO actual limit

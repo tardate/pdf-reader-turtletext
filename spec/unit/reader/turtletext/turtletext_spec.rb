@@ -137,6 +137,7 @@ describe PDF::Reader::Turtletext do
         10.0=>{40.0=>"smoked and streaky da bomb"}
       } }
       {
+        :with_no_match => { :match_term => 'bertie beetle', :expected_position => nil },
         :with_simple_match => { :match_term => 'turkey bacon', :expected_position => {:x=>30.0, :y=>30.0} },
         :with_match_along_line => { :match_term => 'heaven', :expected_position => {:x=>25.0, :y=>40.0} },
         :with_regex_match => { :match_term => /kimchi/, :expected_position => {:x=>15.0, :y=>40.0} },

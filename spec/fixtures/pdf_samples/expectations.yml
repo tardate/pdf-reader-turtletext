@@ -3,18 +3,21 @@
 # This is a YAML-format file, so beware that indentation is significant
 ---
 hello_world.pdf:
-  :test_above:
+  :test_numeric_above:
     :above: 100
     :expected_text:
     -
       - "Hello World"
-  :test_below:
+  :test_numeric_below:
     :below: 900
     :expected_text:
     -
       - "Hello World"
-  :test_below_na:
+  :test_numeric_below_na:
     :below: 10
+    :expected_text: []
+  :test_below_na:
+    :below: "Bertie"
     :expected_text: []
 simple_table_text.pdf:
   :test_above:

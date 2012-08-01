@@ -94,6 +94,14 @@ describe PDF::Reader::Turtletext::Textangle do
         subject { textangle.text }
         it { should eql(expected) }
       end
+      context "when no match" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.below = "fake"
+        end }
+        let(:expected) { [] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
     end
 
     context "when only above specified" do
@@ -101,7 +109,7 @@ describe PDF::Reader::Turtletext::Textangle do
         let(:textangle) { resource_class.new(turtletext_reader) do |r|
           r.above = "heaven"
         end }
-        let(:expected) { [["crunchy bacon"]]}
+        let(:expected) { [["crunchy bacon"]] }
         subject { textangle.text }
         it { should eql(expected) }
       end
@@ -109,7 +117,7 @@ describe PDF::Reader::Turtletext::Textangle do
         let(:textangle) { resource_class.new(turtletext_reader) do |r|
           r.above = /heaVen/i
         end }
-        let(:expected) { [["crunchy bacon"]]}
+        let(:expected) { [["crunchy bacon"]] }
         subject { textangle.text }
         it { should eql(expected) }
       end
@@ -117,7 +125,15 @@ describe PDF::Reader::Turtletext::Textangle do
         let(:textangle) { resource_class.new(turtletext_reader) do |r|
           r.above = 41
         end }
-        let(:expected) { [["crunchy bacon"]]}
+        let(:expected) { [["crunchy bacon"]] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "when no match" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.above = "fake"
+        end }
+        let(:expected) { [] }
         subject { textangle.text }
         it { should eql(expected) }
       end
@@ -157,6 +173,14 @@ describe PDF::Reader::Turtletext::Textangle do
         subject { textangle.text }
         it { should eql(expected) }
       end
+      context "when no match" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.left_of = "fake"
+        end }
+        let(:expected) { [] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
     end
 
     context "when only right_of specified" do
@@ -190,6 +214,14 @@ describe PDF::Reader::Turtletext::Textangle do
           ["turkey bacon","fraud"],
           ["smoked and streaky for me"]
         ] }
+        subject { textangle.text }
+        it { should eql(expected) }
+      end
+      context "when no match" do
+        let(:textangle) { resource_class.new(turtletext_reader) do |r|
+          r.right_of = "fake"
+        end }
+        let(:expected) { [] }
         subject { textangle.text }
         it { should eql(expected) }
       end

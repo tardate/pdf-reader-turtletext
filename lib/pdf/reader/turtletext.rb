@@ -76,13 +76,13 @@ class PDF::Reader::Turtletext
     end
   end
 
-  # Returns an array of text elements found within the x,y limits,
-  # x ranges from +xmin+ (left of page) to +xmax+ (right of page)
-  # y ranges from +ymin+ (bottom of page) to +ymax+ (top of page)
-  # Each line of text found is returned as an array element.
+  # Returns an array of text elements found within the x,y limits:
+  # * x ranges from +xmin+ (left of page) to +xmax+ (right of page)
+  # * y ranges from +ymin+ (bottom of page) to +ymax+ (top of page)
   # Each line of text is an array of the seperate text elements found on that line.
   #   [["first line first text", "first line last text"],["second line text"]]
   def text_in_region(xmin,xmax,ymin,ymax,page=1)
+    return [] unless xmin && xmax && ymin && ymax
     text_map = content(page)
     box = []
 
@@ -102,7 +102,8 @@ class PDF::Reader::Turtletext
 
   # Returns the position of +text+ on +page+
   #   {x: val, y: val }
-  # +text+ may be a string (exact match required) or a Regexp
+  # +text+ may be a string (exact match required) or a Regexp.
+  # Returns nil if the text cannot be found.
   def text_position(text,page=1)
     item = if text.class <= Regexp
       content(page).map do |k,v|
