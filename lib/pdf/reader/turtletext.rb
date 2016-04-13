@@ -18,6 +18,7 @@ class PDF::Reader::Turtletext
   # +source+ is a file name or stream-like object
   # Supported +options+ include:
   # * :y_precision
+  # * :transpose_coordinates
   def initialize(source, options={})
     @options = options
     @reader = PDF::Reader.new(source)
@@ -30,6 +31,14 @@ class PDF::Reader::Turtletext
   # off by a few pixels.
   def y_precision
     options[:y_precision] ||= 3
+  end
+
+  # Returns whether or not the coordinates of the text objects are transposed.
+  # This is an option specified at object creation time that will essentially swap
+  # X and Y coordinates of all the text objects. This can improve the structured content
+  # if the PDF document is oriented in landscape.
+  def coordinates_transposed?
+    options[:transpose_coordinates] ||= false
   end
 
   # Returns positional (with fuzzed y positioning) text content collection as a hash:
@@ -153,7 +162,9 @@ class PDF::Reader::Turtletext
   private
 
     def load_content(page)
-      receiver = PDF::Reader::PositionalTextReceiver.new
+      receiver = (coordinates_transposed? ?
+        PDF::Reader::TransposedPositionalTextReceiver.new :
+        PDF::Reader::PositionalTextReceiver.new)
       reader.page(page).walk(receiver)
       receiver.content
     end
