@@ -16,8 +16,8 @@ require 'rspec/core/rake_task'
 $LOAD_PATH.unshift('lib')
 require 'pdf/reader/turtletext/version'
 
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
+require 'juwelier'
+Juwelier::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "pdf-reader-turtletext"
   gem.version = PDF::Reader::Turtletext::Version::STRING
@@ -30,7 +30,7 @@ Jeweler::Tasks.new do |gem|
   gem.files.exclude 'pkg/*'
   # dependencies defined in Gemfile
 end
-Jeweler::RubygemsDotOrgTasks.new
+Juwelier::RubygemsDotOrgTasks.new
 
 desc "Run all RSpec test examples"
 RSpec::Core::RakeTask.new do |spec|
