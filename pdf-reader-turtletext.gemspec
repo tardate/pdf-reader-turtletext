@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["Paul Gallagher".freeze]
-  s.date = "2019-12-04"
+  s.date = "2019-12-05"
   s.description = "a library that can read structured and positional text from PDFs. Ideal for asembling structured data from invoices and the like.".freeze
   s.email = "gallagher.paul@gmail.com".freeze
   s.extra_rdoc_files = [
@@ -59,7 +59,7 @@ Gem::Specification.new do |s|
     s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<pdf-reader>.freeze, ["= 1.1.1"])
+      s.add_runtime_dependency(%q<pdf-reader>.freeze, ["~> 2.4"])
       s.add_development_dependency(%q<bundler>.freeze, ["~> 1.1"])
       s.add_development_dependency(%q<juwelier>.freeze, ["~> 2.4"])
       s.add_development_dependency(%q<rake>.freeze, ["~> 0.9.2.2"])
@@ -68,7 +68,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<prawn>.freeze, ["~> 0.12.0"])
       s.add_development_dependency(%q<guard-rspec>.freeze, ["~> 1.2.0"])
     else
-      s.add_dependency(%q<pdf-reader>.freeze, ["= 1.1.1"])
+      s.add_dependency(%q<pdf-reader>.freeze, ["~> 2.4"])
       s.add_dependency(%q<bundler>.freeze, ["~> 1.1"])
       s.add_dependency(%q<juwelier>.freeze, ["~> 2.4"])
       s.add_dependency(%q<rake>.freeze, ["~> 0.9.2.2"])
@@ -78,7 +78,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<guard-rspec>.freeze, ["~> 1.2.0"])
     end
   else
-    s.add_dependency(%q<pdf-reader>.freeze, ["= 1.1.1"])
+    s.add_dependency(%q<pdf-reader>.freeze, ["~> 2.4"])
     s.add_dependency(%q<bundler>.freeze, ["~> 1.1"])
     s.add_dependency(%q<juwelier>.freeze, ["~> 2.4"])
     s.add_dependency(%q<rake>.freeze, ["~> 0.9.2.2"])

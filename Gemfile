@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'pdf-reader', '1.1.1'
+gem 'pdf-reader', '~> 2.4'
 
 group :development do
   gem 'bundler', '~> 1.1'
