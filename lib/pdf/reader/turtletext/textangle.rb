@@ -94,7 +94,7 @@ class PDF::Reader::Turtletext::Textangle
     return unless reader
 
     xmin = if right_of
-      if [Fixnum,Float].include?(right_of.class)
+      if [Integer,Float].include?(right_of.class)
         right_of
       elsif xy = reader.text_position(right_of,page)
         xy[:x]
@@ -103,7 +103,7 @@ class PDF::Reader::Turtletext::Textangle
       0
     end
     xmax = if left_of
-      if [Fixnum,Float].include?(left_of.class)
+      if [Integer,Float].include?(left_of.class)
         left_of
       elsif xy = reader.text_position(left_of,page)
         xy[:x]
@@ -113,7 +113,7 @@ class PDF::Reader::Turtletext::Textangle
     end
 
     ymin = if above
-      if [Fixnum,Float].include?(above.class)
+      if [Integer,Float].include?(above.class)
         above
       elsif xy = reader.text_position(above,page)
         xy[:y]
@@ -122,7 +122,7 @@ class PDF::Reader::Turtletext::Textangle
       0
     end
     ymax = if below
-      if [Fixnum,Float].include?(below.class)
+      if [Integer,Float].include?(below.class)
         below
       elsif xy = reader.text_position(below,page)
         xy[:y]
