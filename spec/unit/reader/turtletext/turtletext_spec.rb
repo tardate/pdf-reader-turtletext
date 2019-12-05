@@ -3,7 +3,8 @@ require 'spec_helper'
 describe PDF::Reader::Turtletext do
   let(:resource_class) { PDF::Reader::Turtletext }
 
-  let(:source) { nil } # we're just going to mock the PDF source here
+  # pdf-reader requires valid PDF, even though we won't be using the contents within it
+  let(:source) { pdf_sample'hello_world.pdf' }
   let(:turtletext_reader) { resource_class.new(source,options) }
   let(:options) { {} }
 

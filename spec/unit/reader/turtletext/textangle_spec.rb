@@ -3,7 +3,8 @@ require 'spec_helper'
 describe PDF::Reader::Turtletext::Textangle do
   let(:resource_class) { PDF::Reader::Turtletext::Textangle }
 
-  let(:source) { nil } # we're just going to mock the PDF source here
+  # pdf-reader requires valid PDF, even though we won't be using the contents within it
+  let(:source) { pdf_sample'hello_world.pdf' }
   let(:options) { {} }
   let(:turtletext_reader) { PDF::Reader::Turtletext.new(source,options) }
 
