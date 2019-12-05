@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "lib/pdf-reader-turtletext.rb",
     "lib/pdf/reader/patch/object_hash.rb",
+    "lib/pdf/reader/positional_text_page_layout.rb",
     "lib/pdf/reader/positional_text_receiver.rb",
     "lib/pdf/reader/turtletext.rb",
     "lib/pdf/reader/turtletext/textangle.rb",
