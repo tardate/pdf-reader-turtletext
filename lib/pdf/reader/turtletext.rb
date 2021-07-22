@@ -115,10 +115,8 @@ class PDF::Reader::Turtletext
     else
       content(page).map {|k,v| if x = v.rassoc(text) ; [k,x] ; end }
     end
-    item = item.compact.flatten
-    unless item.empty?
-      { :x => item[1], :y => item[0] }
-    end
+    item = item.compact
+    item
   end
 
   # Returns a text region definition using a descriptive block.
